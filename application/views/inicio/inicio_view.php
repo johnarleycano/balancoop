@@ -189,19 +189,21 @@ if ($this->session->userdata('id_empresa')) {
             if (!validacion) {
                 //Se muestra el mensaje de error
                 mostrar_mensaje('Documento no digitado', 'Por favor digite su número de documento de identificación y seleccione la empresa y la oficina.');
-            } else {
-                //Validaremos la información mediante ajax
-                encontrado = ajax("<?php echo site_url('transferencia/buscar_asociado'); ?>", {"documento": documento.val(), id_empresa: empresa.val()}, 'JSON');
 
-                //Si no
-                if(encontrado) {
-                    //Se redirecciona
-                    redireccionar("<?php echo site_url('transferencia/index'); ?>" + "/" + empresa.val()+ "/" + oficina.val() + "/" + documento.val() + "/get/");
-                } else {
-                    //Se muestra el mensaje de error
-                    mostrar_mensaje('No se ha podido entrar', 'El número que ingresó no ha sido encontrado en nuestra base de datos. Por favor verifíquelo e intente nuevamente');
-                } //if
-            }// if
+                return false;
+            } // if
+
+            //Validaremos la información mediante ajax
+            encontrado = ajax("<?php echo site_url('transferencia/buscar_asociado'); ?>", {"documento": documento.val(), "id_empresa": empresa.val()}, 'JSON');
+
+            // Si se encontró el usuario
+            if(encontrado) {
+                // Se muestra la pantalla para pedir contraseña
+                $("#cont_datos").load("<?php echo site_url('inicio/cargar_interfaz'); ?>", {"tipo": 'usuario_clave', "documento": documento.val(), "id_empresa": empresa.val(), "id_oficina": oficina.val()});               
+            } else {
+                //Se muestra el mensaje de error
+                mostrar_mensaje('No se ha podido entrar', 'El número que ingresó no ha sido encontrado en nuestra base de datos. Por favor verifíquelo e intente nuevamente');
+            } //if
 
             //Se detiene el formulario
             return false;

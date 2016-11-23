@@ -91,6 +91,19 @@ Class Inicio_model extends CI_Model{
         	return false;
         }
     }
+
+    function validar_clave_transferencia($documento, $id_empresa, $password)
+    {
+        $this->db->where('password', $password);
+        $this->db->where('id_empresa', $id_empresa);
+        $this->db->where('Identificacion', $documento);
+
+        // Si la clave es correcta
+        if ($this->db->get('usuarios_sistema')->row()) {
+            //se retorna verdadero
+            return true;
+        }
+    } // validar_clave_transferencia
 }
 /* Fin del archivo inicio_model.php */
 /* Ubicación: ./application/models/inicio_model.php */

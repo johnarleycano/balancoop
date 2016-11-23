@@ -53,6 +53,16 @@ Class Inicio extends CI_Controller{
                 //Cargamos la vista
                 $this->load->view('transferencia/transferencia_view');
                 break;
+
+            // Solicitud de clave para ver transferencia sin usar sesión
+            case 'usuario_clave':
+                $this->data['documento'] = $this->input->post("documento");
+                $this->data['id_empresa'] = $this->input->post("id_empresa");
+                $this->data['id_oficina'] = $this->input->post("id_oficina");
+
+                //Cargamos la vista
+                $this->load->view('inicio/clave_usuario_transferencia_view', $this->data);
+            break;
         }
     }
 
@@ -117,7 +127,7 @@ Class Inicio extends CI_Controller{
                     "identificacion" => $datos_sesion->Identificacion,
                     "id_empresa" => $datos_sesion->id_empresa,
                     "id_filtro_por_defecto" => $datos_sesion->id_filtro_por_defecto,
-                    "estado" => $datos_sesion->estado,
+                    "estado" => $datos_sesion->Estado,
                     "tipo" => $datos_sesion->id_tipo_usuario,
                     "Actualizacion" => '0'
                 );
@@ -144,6 +154,26 @@ Class Inicio extends CI_Controller{
 
             //Se retorna el resultado
             print json_encode($asociado);
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    }
+
+    function validar_clave_transferencia(){
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            //Recibo los datos por POST
+            $documento = $this->input->post('documento');
+            $id_empresa = $this->input->post('id_empresa');
+            $password = sha1($this->input->post('clave'));
+
+            // Si existen los datos del usuario
+            if($this->inicio_model->validar_clave_transferencia($documento, $id_empresa, $password)){
+                echo true;
+            } else {
+                echo false;
+            } // if
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
             redirect('');
