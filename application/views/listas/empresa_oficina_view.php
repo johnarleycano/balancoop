@@ -33,7 +33,7 @@ $paises = $this->listas_model->cargar_paises();
 		<thead>
 			<tr>
 				<th class="alinear_centro" width="10%">Opc.</th>
-                <th class="alinear_centro" width="5%">Nro.</th>
+                <th class="alinear_centro" width="5%">Id</th>
                 <th class="alinear_centro">Nombre</th>
                 <th class="alinear_centro">Razón social</th>
                 <th class="alinear_centro">Nit</th>

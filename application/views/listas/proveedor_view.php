@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th class="alinear_centro" width="10%">Opc.</th>
-                <th class="alinear_centro" width="5%">Nro.</th>
+                <th class="alinear_centro" width="5%">Id</th>
                 <th class="alinear_centro">Nombre</th>
                 <th class="alinear_centro">Nit</th>
                 <th class="oculto">nit</th>
@@ -32,7 +32,7 @@
                 <td>
                     <span onclick="javascript:editar_dato(<?php echo $proveedor->intCodigo; ?>)" class="glyphicon glyphicon-edit"></span>
                 </td><!-- Opciones -->
-                <td class="alinear_derecha"><?php echo $cont; ?></td>
+                <td class="alinear_derecha"><?php echo $proveedor->intCodigo; ?></td>
                 <td id="input_nombre<?php echo $proveedor->intCodigo; ?>"><?php echo $proveedor->strNombre; ?></td>
                 <td ><?php echo $proveedor->Nit.'-'.$proveedor->Codigo_Verificacion; ?></td>
                 <td id="input_nit<?php echo $proveedor->intCodigo; ?>" class="oculto"><?php echo $proveedor->Nit; ?></td>

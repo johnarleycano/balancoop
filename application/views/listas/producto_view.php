@@ -23,7 +23,7 @@ $proveedores = $this->listas_model->cargar_proveedores();
         <thead>
             <tr>
                 <th class="alinear_centro" width="10%">Opc.</th>
-                <th class="alinear_centro" width="5%">Nro.</th>
+                <th class="alinear_centro" width="5%">Id</th>
                 <th class="alinear_centro">Nombre</th>
                 <th class="alinear_centro">Proveedor</th>
                 <th class="alinear_centro">Estado</th>
@@ -44,7 +44,7 @@ $proveedores = $this->listas_model->cargar_proveedores();
                             <span class="glyphicon glyphicon-edit"></span>
                         </a> 
                     </td>
-                    <td><?php echo $cont; ?></td>
+                    <td class="text-right"><?php echo $producto->intCodigo; ?></td>
                     <td><?php echo $producto->strNombre; ?></td>
                     <td><?php echo $producto->Proveedor; ?></td>
                     <td><?php if($producto->Estado == '1'){echo "Activo";}else{echo "Inactivo";} ?></td>

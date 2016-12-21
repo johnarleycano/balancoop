@@ -23,7 +23,7 @@ $anios = $this->listas_model->listar_anios();
 		<thead>
             <tr>
 				<th class="alinear_centro" width="10%">Opc.</th>
-                <th class="alinear_centro" width="5%">Nro.</th>
+                <th class="alinear_centro" width="5%">Id</th>
 				<th>Nombre</th>
 				<th>Descripción</th>
 				<th>Fecha Inicial</th>
@@ -52,7 +52,7 @@ $anios = $this->listas_model->listar_anios();
                         <span class="glyphicon glyphicon-edit icono"></span>            
                     </a>
 				</td>
-                <td class="alinear_derecha"><?php echo $cont; ?></td>
+                <td class="alinear_derecha"><?php echo $campana->intCodigo; ?></td>
                 <td><?php echo $campana->strNombre; ?></td>
                 <td><?php echo $campana->descripcion; ?></td>
                 <td><?php echo $campana->fecha_inicia; ?></td>
