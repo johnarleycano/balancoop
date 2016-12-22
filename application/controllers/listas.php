@@ -248,6 +248,12 @@ Class Listas extends CI_Controller{
                 $this->load->view('listas/campana_view');
                 break;
 
+            // Claves
+            case 'claves':
+                //Cargamos la vista
+                $this->load->view('listas/claves_view');
+            break; // Claves
+
             //Datos personales del cliente
             case 'cliente':
                 //Se recibe el código del departamento por post

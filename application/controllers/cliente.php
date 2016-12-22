@@ -62,6 +62,10 @@ Class Cliente extends CI_Controller{
             //Suiche
             switch ($tipo) {
                 case 'asociado':
+                    // Si trae contraseña de transferencia
+                    if ($datos["Clave_Transferencia"]) {
+                        $datos["Clave_Transferencia"] = sha1($datos["Clave_Transferencia"]);
+                    }
                     //Se envían los datos al modelo que los guardará
                     $actualizar = $this->cliente_model->actualizar($datos, $id_asociado);
                     break;

@@ -92,14 +92,22 @@ Class Inicio_model extends CI_Model{
         }
     }
 
+    /**
+     * Valida que la clave ingresada por el usuario corresponda a la que está
+     * guardada en la tabla de asociados
+     * @param  int $documento  Número de documento
+     * @param  int $id_empresa Id de la empresa a la que pertenece el asociado
+     * @param  string $password   Contraseña en sha1
+     * @return boolean             Exito
+     */
     function validar_clave_transferencia($documento, $id_empresa, $password)
     {
-        $this->db->where('password', $password);
-        $this->db->where('id_empresa', $id_empresa);
+        $this->db->where('Clave_Transferencia', $password);
+        $this->db->where('id_Empresa', $id_empresa);
         $this->db->where('Identificacion', $documento);
 
         // Si la clave es correcta
-        if ($this->db->get('usuarios_sistema')->row()) {
+        if ($this->db->get('asociados')->row()) {
             //se retorna verdadero
             return true;
         }

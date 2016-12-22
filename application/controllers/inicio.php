@@ -56,12 +56,24 @@ Class Inicio extends CI_Controller{
 
             // Solicitud de clave para ver transferencia sin usar sesión
             case 'usuario_clave':
+                $this->data['id_asociado'] = $this->input->post("id_asociado");
                 $this->data['documento'] = $this->input->post("documento");
                 $this->data['id_empresa'] = $this->input->post("id_empresa");
                 $this->data['id_oficina'] = $this->input->post("id_oficina");
 
                 //Cargamos la vista
                 $this->load->view('inicio/clave_usuario_transferencia_view', $this->data);
+            break;
+
+            // Creación de clave para asociados
+            case 'usuario_clave_crear':
+                // $this->data['id_asociado'] = $this->input->post("id_asociado");
+                // $this->data['documento'] = $this->input->post("documento");
+                // $this->data['id_empresa'] = $this->input->post("id_empresa");
+                // $this->data['id_oficina'] = $this->input->post("id_oficina");
+
+                //Cargamos la vista
+                $this->load->view('inicio/clave_usuario_crear_view', $this->data);
             break;
         }
     }

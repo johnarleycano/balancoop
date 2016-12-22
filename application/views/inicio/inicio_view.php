@@ -9,6 +9,9 @@ if ($this->session->userdata('id_empresa')) {
 <!-- Oculto -->
 <input id="id_usuario_oculto" type="hidden" value="<?php echo $this->session->userdata('id_usuario'); ?>">
 
+<!-- Id asociado de la transferencia -->
+<input type="hidden" id="id_asociado_transferencia">
+
 <!-- Contenedor principal -->
 <div id="cont_inicio" class="col-lg-12">
     <!-- Contenedor del banner e información de eventos -->
@@ -103,12 +106,20 @@ if ($this->session->userdata('id_empresa')) {
     <?php } ?>
 </div><!-- Contenedor principal -->
 <div id="cont_datos"></div>
+<div id="cont_crear_clave"></div>
 <div class="clear"></div>
 
 <script type="text/javascript">
+    function crear_clave(){
+        imprimir("aqui")
+        //Cargamos la interfaz
+        // $("#cont_crear_clave").load("<?php echo site_url('inicio/cargar_interfaz'); ?>", {tipo: 'usuario_clave_crear', id_usuario: $("#id_asociado_transferencia").val()});
+
+        // Se envía email con los datos para  
+    } // crear_clave
+
     // Cuando el documento esté listo
     $(document).ready(function(){
-
         // Se almacena el tipo de usuario
         id_tipo_usuario = "<?php echo $this->session->userdata('tipo'); ?>";
 
@@ -198,8 +209,9 @@ if ($this->session->userdata('id_empresa')) {
 
             // Si se encontró el usuario
             if(encontrado) {
+                imprimir(encontrado.id_Asociado)
                 // Se muestra la pantalla para pedir contraseña
-                $("#cont_datos").load("<?php echo site_url('inicio/cargar_interfaz'); ?>", {"tipo": 'usuario_clave', "documento": documento.val(), "id_empresa": empresa.val(), "id_oficina": oficina.val()});               
+                $("#cont_datos").load("<?php echo site_url('inicio/cargar_interfaz'); ?>", {"tipo": 'usuario_clave', "id_asociado": encontrado.id_Asociado, "documento": documento.val(), "id_empresa": empresa.val(), "id_oficina": oficina.val()});               
             } else {
                 //Se muestra el mensaje de error
                 mostrar_mensaje('No se ha podido entrar', 'El número que ingresó no ha sido encontrado en nuestra base de datos. Por favor verifíquelo e intente nuevamente');

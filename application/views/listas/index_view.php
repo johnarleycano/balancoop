@@ -14,6 +14,7 @@
             <button id="btn_productos" type="button" class="btn btn-default">Productos</button>
             <button id="btn_regiones" type="button" class="btn btn-default">Regiones</button>
             <button id="btn_usuarios" type="button" class="btn btn-default">Usuarios</button>
+            <button id="btn_claves" type="button" class="btn btn-default">Contraseñas de asociados</button>
         </div>
     <center> 
     <p></p>
@@ -24,6 +25,15 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        // Cotraseñas
+        $("#btn_claves").on("click", function(){
+            //Cargamos la interfaz
+            $("#cont_listas").load("listas/cargar_interfaz", {tipo: 'claves'});
+
+            //Se muestra la barra de carga
+            cargando($("#cont_listas"));
+        }); // Cotraseñas
+
         // Campañas
         $("#btn_campanas").on("click", function(){
             //Cargamos la interfaz
