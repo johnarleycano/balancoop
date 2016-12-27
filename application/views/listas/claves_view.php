@@ -11,17 +11,22 @@
 		<!-- Cabecera -->
         <thead>
             <tr>
-				<th class="alinear_centro" width="10%">Opc.</th>
                 <th class="alinear_centro" width="5%">Nro.</th>
+                <th class="alinear_centro">Nombre completo</th>
+                <th class="alinear_centro">Última modificación</th>
             </tr>
         </thead><!-- Cabecera -->
         
         <!-- Cuerpo -->
         <tbody>
-			<tr>
-				<td></td>
-				<td></td>
-			</tr>
+            <!-- Recorrido de los registros -->
+            <?php $cont = 1; foreach ($this->cliente_model->cargar_asociados_con_clave() as $asociado) { ?>
+                <tr>
+                    <td align="right"><?php echo $cont++; ?></td>
+                    <td><?php echo "$asociado->Nombre $asociado->PrimerApellido $asociado->SegundoApellido"; ?></td>
+                    <td><?php echo date("Y-m-d", strtotime($asociado->Fecha_Cambio_Clave)); ?></td>
+                </tr>
+            <?php } // foreach ?>
 		</tbody><!-- Cuerpo -->
     </tabla><!-- Tabla -->
 </div><!-- Tabla responsiva -->
@@ -53,18 +58,20 @@
 						<div class="col-lg-3">
 							
 						</div>
-                        
+
+                        <div class="clear"></div>
+                        <br>
                         <div id="form_claves" class="oculto">
+                            <center><b>Cambiar la contraseña de <span id="nombre_asociado"></span></b></center>
+                            <br>
                             <div class="col-lg-6">
                                 <!-- Contraseña 1 -->
-                                <label for="input_clave1" class="control-label">Contraseña *</label>
-                                <input id="input_clave1" class="form-control input-sm" type="password" ><!-- Contraseña 1 -->
+                                <input id="input_clave1" class="form-control input-sm" type="password" placeholder="Contraseña *"><!-- Contraseña 1 -->
                             </div>
 
                             <div class="col-lg-6">
                                 <!-- Contraseña 2 -->
-                                <label for="input_clave2" class="control-label">Repita la contraseña *</label>
-                                <input id="input_clave2" class="form-control input-sm" type="password" ><!-- Contraseña 2 -->
+                                <input id="input_clave2" class="form-control input-sm" type="password" placeholder="Repita la contraseña *"><!-- Contraseña 2 -->
                             </div>
                         </div>
 					</div><!-- Container -->
@@ -116,21 +123,16 @@
             return false;
         };
 
-        //Arreglo JSON de datos a enviar posteriormente
-        datos_formulario = {
-            'Clave_Transferencia': clave1.val(),
-        }
-        // imprimir(datos_formulario)
-        
+        // Se actualiza la contraseña
+        ajax("<?php echo site_url('cliente/actualizar'); ?>", {"datos": {'Clave_Transferencia': clave1.val(), "Fecha_Cambio_Clave": "<?php echo date('Y-m-d h:i:s'); ?>"}, "tipo": "asociado", "id_asociado": $("#id_asociado").val()}, "html");
 
-        actualizar = ajax("<?php echo site_url('cliente/actualizar'); ?>", {"datos": datos_formulario, "tipo": "asociado", "id_asociado": $("#id_asociado").val()}, "html");
-        imprimir(actualizar)
+        $('#modal_buscar_asociado').modal("hide");
 
-
-
-
-
-
+        //Cuando se termine de cerrar
+        $('#modal_buscar_asociado').on('hidden.bs.modal', function (e) {
+            //Cargamos la interfaz
+            $("#cont_listas").load("listas/cargar_interfaz", {tipo: 'claves'});
+        });
 	} // cambiar_clave
 
 	// Cuando el DOM esté listo   
@@ -159,10 +161,10 @@
             
             // Si no existe el asociado
             if (!asociado.id_Asociado) {
-                // Se activa el botón para guardar los cambios
+                // Se desactiva el botón para guardar los cambios
                 $("#btn_guardar").attr("disabled", true);
 
-                // Se muestra el formulario de contraseñas
+                // Se oculta el formulario de contraseñas
                 $("#form_claves").hide();
 
             	//Se muestra el mensaje de error
@@ -170,7 +172,10 @@
 
                 return false;
             } else {
-                // Se oculta el formulario de contraseñas
+                // Se pone el nombre del asociado
+                $("#nombre_asociado").text(asociado.Nombre + " " + asociado.PrimerApellido + " " + asociado.SegundoApellido);
+                
+                // Se muestra el formulario de contraseñas
                 $("#form_claves").show();
 
                 // Se activa el botón para guardar los cambios

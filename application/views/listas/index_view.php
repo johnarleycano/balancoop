@@ -1,3 +1,5 @@
+<?php 
+ ?>
 <!-- Si el usuario es responsable, no puede crear listas, en caso que quiera entrar forzadamente por la URL -->
 <?php if($this->session->userdata('tipo') != '2'){ ?>
     <center>

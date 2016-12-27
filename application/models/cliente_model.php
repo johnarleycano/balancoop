@@ -254,6 +254,17 @@ Class Cliente_model extends CI_Model{
     }// cargar_asociado
 
     /**
+     * Carga de asociados que tienen clave configurada
+     */
+    function cargar_asociados_con_clave(){
+        $this->db->select('*');
+        $this->db->where('Clave_Transferencia IS NOT NULL', null);
+        $this->db->where('Clave_Transferencia !=', "");
+
+        return $this->db->get('asociados')->result();
+    } //cargar_hijos
+
+    /**
      * [cargar_beneficiarios description]
      * @param  [type] $id_asociado [description]
      * @return [type]              [description]
