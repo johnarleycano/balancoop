@@ -129,34 +129,6 @@ if (isset($id_asociado)) {
     <button type="submit" class="col-lg-12 btn btn-success btn-lg btn-block">Guardar</button>
 </form><!-- Formulario -->
 
-<?php if ($id_asociado){ ?>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            // Cargados los departamentos, seleccionaremos el departamento seleccionado
-            $('#input_departamento_cliente > option[value="<?php echo $asociado->Departamento_Cliente; ?>"]').attr('selected', 'selected');
-
-            // Cargadas las ciudades, seleccionaremos la ciudad seleccionada
-            $('#input_ciudad_cliente > option[value="<?php echo $asociado->ciudad_cliente; ?>"]').attr('selected', 'selected');
-
-            // Cargadas los barrios, seleccionaremos el barrio seleccionado
-            $('#input_barrio_cliente > option[value="<?php echo $asociado->Barrio_Cliente; ?>"]').attr('selected', 'selected');
-
-            // Cargados los departamentos, seleccionaremos el departamento seleccionado
-            $('#input_departamento_conyugue > option[value="<?php echo $asociado->Departamento_Conyugue; ?>"]').attr('selected', 'selected');
-
-            // Cargadas las ciudades, seleccionaremos la ciudad seleccionada
-            $('#input_ciudad_conyugue > option[value="<?php echo $asociado->ciudad_conyugue; ?>"]').attr('selected', 'selected');
-
-            // Cargadas los barrios, seleccionaremos el barrio seleccionado
-            $('#input_barrio_conyugue > option[value="<?php echo $asociado->Barrio_Conyugue; ?>"]').attr('selected', 'selected');
-
-            // Datos de actualiación externa
-            $("#actualizacion").val("<?php echo $asociado->Actualizado; ?>");
-            $("#fecha_actualizacion").val("<?php echo $asociado->Fecha_Actualizacion; ?>");
-        });
-    </script>
-<?php } ?>
-
 <script type="text/javascript">
     $(document).ready(function(){
         var id_asociado = $("#id_asociado_oculto").val();
@@ -279,16 +251,16 @@ if (isset($id_asociado)) {
         /**
          * Cambio de género
          */
-        genero_cliente.on("change", function(){
-            //Si el género es diferente a masculino
-            if ($(this).val() != "1") {
-                //Se muestra el contenedor que pide si es cabeza de familia
-                mostrar_elemento($("#cont_cabeza_familia"));
-            } else {
-                //Se oculta info no necesaria
-                ocultar_elemento($("#cont_cabeza_familia"));
-            }
-        });//Genero change
+        // genero_cliente.on("change", function(){
+        //     //Si el género es diferente a masculino
+        //     if ($(this).val() != "1") {
+        //         //Se muestra el contenedor que pide si es cabeza de familia
+        //         mostrar_elemento($("#cont_cabeza_familia"));
+        //     } else {
+        //         //Se oculta info no necesaria
+        //         ocultar_elemento($("#cont_cabeza_familia"));
+        //     }
+        // });//Genero change
 
         /**
          * Cuando cambie el estado actual en la entidad
@@ -421,6 +393,9 @@ if (isset($id_asociado)) {
                 //Se agrega cada departamento al select
                 $(departamento_cliente).append("<option value='" + val.strCodigo + "'>" + val.strNombre + "</option>");
             })//Fin each
+
+            // Cargados los departamentos, seleccionaremos el departamento por defecto
+            select_por_defecto("input_departamento_cliente", "<?php echo $asociado->Departamento_Cliente; ?>");
         };
 
         /**
@@ -449,7 +424,7 @@ if (isset($id_asociado)) {
         }); //Departamento change
 
         // Si ya hay un departamento seleccionado, cargaremos las ciudades de ese departamento
-        if (departamento_cliente.val() != "") {
+        if ($("#input_departamento_cliente").val() != "") {
             //Se realiza la consulta por ajax
             ciudades = ajax("<?php echo site_url('listas/cargar_ciudades'); ?>", {'codigo_departamento': $(this).val()}, "JSON");
 
@@ -467,8 +442,10 @@ if (isset($id_asociado)) {
                 //Se agrega cada ciudad al select
                 $(ciudad_cliente).append("<option value='" + val.strCodigo + "'>" + val.strNombre + "</option>");
             })//Fin each
-        }
 
+            // Cargadas las ciudades, seleccionaremos la ciudad por defecto
+            select_por_defecto("input_ciudad_cliente", "<?php echo $asociado->ciudad_cliente; ?>");
+        }
 
         /**
          * Selección de la ciudad y carga de los barrios del cliente
@@ -514,6 +491,9 @@ if (isset($id_asociado)) {
                 //Se agrega cada barrio al select
                 $(barrio_cliente).append("<option value='" + val.strCodigo + "'>" + val.strNombre + "</option>");
             })//Fin each
+
+            // Cargadas los barrios, seleccionaremos el barrio por defecto
+            select_por_defecto("input_barrio_cliente", "<?php echo $asociado->Barrio_Cliente; ?>");
         }
 
 
@@ -564,6 +544,9 @@ if (isset($id_asociado)) {
                 //Se agrega cada departamento al select
                 $(departamento_conyugue).append("<option value='" + val.strCodigo + "'>" + val.strNombre + "</option>");
             })//Fin each
+
+            // Cargados los departamentos, seleccionaremos el departamento por defecto
+            select_por_defecto("input_departamento_conyugue", "<?php echo $asociado->Departamento_Conyugue; ?>");
         }
 
 
@@ -610,6 +593,10 @@ if (isset($id_asociado)) {
                 //Se agrega cada ciudad al select
                 $(ciudad_conyugue).append("<option value='" + val.strCodigo + "'>" + val.strNombre + "</option>");
             })//Fin each
+
+            // Cargadas los ciduades, seleccionaremos la ciudad por defecto
+            select_por_defecto("input_ciudad_conyugue", "<?php echo $asociado->ciudad_conyugue; ?>");
+
         }
 
 
@@ -658,6 +645,9 @@ if (isset($id_asociado)) {
                 //Se agrega cada barrio al select
                 $(barrio_conyugue).append("<option value='" + val.strCodigo + "'>" + val.strNombre + "</option>");
             })//Fin each
+
+            // Cargadas los barrios, seleccionaremos el barrio seleccionado
+            select_por_defecto("input_barrio_conyugue", "<?php echo $asociado->Barrio_Conyugue; ?>");
         }
 
         /**
@@ -1168,3 +1158,12 @@ if (isset($id_asociado)) {
         }); // Submit
     });
 </script>
+
+<?php if ($id_asociado){ ?>
+    <script type="text/javascript">
+        $(document).ready(function(){// Datos de actualiación externa
+            $("#actualizacion").val("<?php echo $asociado->Actualizado; ?>");
+            $("#fecha_actualizacion").val("<?php echo $asociado->Fecha_Actualizacion; ?>");
+        });
+    </script>
+<?php } ?>

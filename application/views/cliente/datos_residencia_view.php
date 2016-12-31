@@ -132,6 +132,7 @@ if ($id_asociado) {
 <?php if ($id_asociado) { ?>
     <script type="text/javascript">
         $(document).ready(function(){ 
+            imprimir("<?php echo $asociado->Pais_Cliente; ?>")
             /**
              * Campos que cargan información del cliente seleccionado, en caso de que lo haya
              */

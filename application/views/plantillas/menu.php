@@ -61,3 +61,8 @@
         <?php } ?>
     </ul>
 </div><!--/.navbar-collapse -->
+
+<script>
+    // Ejecución de las edades actualizadas
+    // ajax("<?php echo site_url('crm/actualizar') ?>", {"tipo": "condicional"}, 'JSON', true);
+</script>

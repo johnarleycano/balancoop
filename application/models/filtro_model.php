@@ -16,12 +16,12 @@ Class Filtro_model extends CI_Model{
          } 
     }
 
-    function cargar_campos($tipo){
-        $this->db->select('*');
-        if(!$tipo){
-        }else{
+    function cargar_campos($tipo = null){
+        if($tipo){
             $this->db->where('Asociado', $tipo);
-        }
+        } // if
+        $this->db->where('Estado', 1);
+        $this->db->order_by('strNombre');
         
         //Retornamos el resultado
         return $this->db->get('filtro_campos')->result();
@@ -30,28 +30,29 @@ Class Filtro_model extends CI_Model{
     function cargar_filtros_asociados($tipo){
         $sql =
         "SELECT
-        filtros_creados.intCodigo,
-        filtros_creados.strNombre,
-        filtros_creados.es_reporte,
-        filtros_creados.es_sistema,
-        filtros_creados.es_cliente,
-        filtros_creados.busqueda_rapida,
-        filtros_creados.id_asociado,
-        filtros_creados.privado,
-        filtros_creados.Estado,
-        filtros_creados.id_usuario,
-        filtros_creados.id_Filtro_balance,
-        filtros_creados.id_campo_balance,
-        filtro_campos.Asociado
+            filtros.intCodigo,
+            filtros.strNombre,
+            filtros.es_reporte,
+            filtros.es_sistema,
+            filtros.es_cliente,
+            filtros.busqueda_rapida,
+            filtros.id_asociado,
+            filtros.privado,
+            filtros.Estado,
+            filtros.id_usuario,
+            filtros.id_Filtro_balance,
+            filtros.id_campo_balance,
+            campos.Asociado
         FROM
-        filtros_creados
-        INNER JOIN filtros_creados_campos ON filtros_creados_campos.id_filtro = filtros_creados.intCodigo
-        INNER JOIN filtro_campos ON filtros_creados_campos.id_filtro_campo = filtro_campos.intCodigo
+            filtros_creados AS filtros
+        INNER JOIN filtros_creados_campos AS campos_creados ON campos_creados.id_filtro = filtros.intCodigo
+        INNER JOIN filtro_campos AS campos ON campos_creados.id_filtro_campo = campos.intCodigo
         WHERE
-        filtros_creados.id_usuario = {$this->session->userdata('id_usuario')}
-        AND filtro_campos.Asociado = {$tipo}
+            filtros.id_usuario = {$this->session->userdata('id_usuario')}
+        AND campos.Asociado = {$tipo}
         GROUP BY
-        filtros_creados.intCodigo";
+            filtros.intCodigo
+        ORDER BY filtros.strNombre";
 
         // $this->db->select('*');
         // $this->db->where('id_asociado', $this->session->userdata('id_usuario'));
@@ -126,7 +127,7 @@ Class Filtro_model extends CI_Model{
         //Si el registro es exitoso
         if($guardar){
             //Retorna verdadero
-            return true;
+            return mysql_insert_id();
         }else{
             //Retorna falso
             return false;
@@ -183,7 +184,7 @@ Class Filtro_model extends CI_Model{
         //Si el registro es exitoso
         if($guardar){
             //Retorna verdadero
-            return true;
+            return $id;
         }else{
             //Retorna falso
             return false;
@@ -303,6 +304,7 @@ Class Filtro_model extends CI_Model{
         //Ahora consultamos las condiciones para ese tipo de filtro
         $this->db->select('*');
         $this->db->where('id_filtro_tipo', $id_tipo_filtro);
+        $this->db->order_by('strNombre');
         
         //Retornamos el resultado
         return $this->db->get('filtro_condiciones')->result();

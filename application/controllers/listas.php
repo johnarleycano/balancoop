@@ -428,13 +428,41 @@ Class Listas extends CI_Controller{
             //Si es filtro asociados
             case 'filtro_asociados':
                 //Cargamos la vista
-                $this->load->view('filtros/asociados/index_view');
-                break;
+                $this->load->view('filtros/asociados/index');
+            break;
+
+            //Si es filtro asociados
+            case 'filtro_asociados_crear':
+                // Se recibe por post la variable que define si es un registro nuevo o editado
+                $this->data["id"] = $this->input->post("id");
+            
+                //Cargamos la vista
+                $this->load->view('filtros/asociados/crear', $this->data);
+            break;
+
+            //Si es tabla de filstros de asociados (1: asociados)
+            case 'filtros_asociados_lista':
+                // Se cargan los filtros
+                $this->data['filtros'] = $this->filtro_model->cargar_filtros_asociados('1');
+
+                //Cargamos la vista
+                $this->load->view('filtros/asociados/listar', $this->data);
+            break;
+
+                //Si es tabla de filtros de productos
+                case 'tabla_filtros_productos':
+                    // Se cargan los filtros de productos (0: no asociados)
+                    $this->data['filtros'] = $this->filtro_model->cargar_filtros_productos();
+
+                    //Cargamos la vista
+                    $this->load->view('filtros/productos/tabla_view', $this->data);
+                    break;
 
             //Si es filtro de productos
             case 'filtro_productos':
                 //Cargamos la vista
-                $this->load->view('filtros/productos/index_view');
+                $this->load->view('filtros/productos/index');
+                // $this->load->view('filtros/productos/index_view');
                 break;
 
             //Si es actualización de registros
@@ -513,24 +541,6 @@ Class Listas extends CI_Controller{
 
                 //Cargamos la vista
                 $this->load->view('crm/tabla_view', $this->data);
-                break;
-
-            //Si es tabla de filstros de asociados (1: asociados)
-            case 'tabla_filtros_asociados':
-                // Se cargan los filtros
-                $this->data['filtros'] = $this->filtro_model->cargar_filtros_asociados('1');
-
-                //Cargamos la vista
-                $this->load->view('filtros/asociados/tabla_view', $this->data);
-                break;
-
-            //Si es tabla de filtros de productos
-            case 'tabla_filtros_productos':
-                // Se cargan los filtros de productos (0: no asociados)
-                $this->data['filtros'] = $this->filtro_model->cargar_filtros_productos();
-
-                //Cargamos la vista
-                $this->load->view('filtros/productos/tabla_view', $this->data);
                 break;
 
             //Si es campaña

@@ -7,7 +7,7 @@
  * @param  {string} tipo_respuesta   Respuesta que se enviará. Puede ser HTML o JSON
  * @return {string} respuesta        Datos en HTML o JSON
  */
-function ajax(url, datos, tipo_respuesta){
+function ajax(url, datos, tipo_respuesta, asincrono = false){
     //Variable de exito
     exito = "inicialización";
 
@@ -18,7 +18,7 @@ function ajax(url, datos, tipo_respuesta){
         data: datos,
         type: "POST",
         dataType: tipo_respuesta,
-        async: false,
+        async: asincrono,
         success: function(respuesta){
             //Si la respuesta no es error
             if(respuesta != "error"){
@@ -48,6 +48,21 @@ function cargando(elemento){
     elemento.append('<div><img src="http://localhost/balancoop/img/cargando.gif"/></div>')
     // elemento.append('<div><img src="<?php echo base_url()."img/cargando.gif"; ?>"/></div>')
 }
+
+/**
+ * Pone un valor por defecto a un checkbox
+ * @param  {string} elemento Nombre del check
+ * @param  {string} valor    Valor del option
+ */
+function check_por_defecto(elemento, valor)
+{
+    // Si el valor es igual a 1
+    if (valor == "1") { 
+            $("#" + elemento).prop("checked", true);
+        }else{
+            $("#" + elemento).prop("checked", false);
+        };
+} // check_por_defecto
 
 /**
  * Permite desplazarse hacia un elemento
@@ -172,6 +187,17 @@ function redireccionar(url){
     //Se redirecciona
     location.href = url;
 }
+
+/**
+ * Pone un valor por defecto a un select
+ * @param  {string} elemento Nombre del select
+ * @param  {string} valor    Valor del option
+ */
+function select_por_defecto(elemento, valor)
+{
+    // Se pone el valor por defecto al elemento seleccionado
+    $('#' + elemento + ' option[value="' + valor + '"]').attr("selected", true);
+} // select_por_defecto
 
 /**
  * Valida que los campos que se le manden tengan información

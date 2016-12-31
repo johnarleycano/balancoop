@@ -2,6 +2,11 @@
 Thumbs.db
 ehthumbs.db
 
+# Careptas
+img/logos/*
+application/views/filtros_/*
+application/views/filtros_original/*
+
 # Folder config file
 Desktop.ini
 
@@ -45,3 +50,4 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+

@@ -188,7 +188,7 @@ if ($id_asociado) {
             </div><!-- Género del cliente -->
             
             <!-- Si el género es diferente a masculino, preguntará si es cabeza de familia -->
-            <div id="cont_cabeza_familia" class="oculto">
+            <div id="cont_cabeza_familia">
                 <!-- ¿Es cabeza de familia? -->
                 <div class="form-group">
                     <label for="input_cabeza_familia_cliente" class="col-sm-5 control-label">¿Es cabeza de familia?</label>

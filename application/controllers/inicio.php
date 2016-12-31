@@ -15,7 +15,7 @@ Class Inicio extends CI_Controller{
         parent::__construct();
 
         //Carga de modelos
-        $this->load->model(array('inicio_model', 'listas_model', 'transferencia_model'));
+        $this->load->model(array('inicio_model', 'listas_model', 'transferencia_model', 'crm_model'));
 
         //Carga de listas
         $this->data['empresas'] = $this->listas_model->cargar('empresas_usuarias');
@@ -32,7 +32,26 @@ Class Inicio extends CI_Controller{
         $this->data['contenido_principal'] = 'inicio/inicio_view';
         //Se carga la plantilla con las demas variables
         $this->load->view('plantillas/template', $this->data);
+
+        $this->calcular_edades();
 	}
+
+    function calcular_edades(){
+        // $asociados = $this->cliente_model->cargar_asociados_todos_fecha_nacimiento();
+        // foreach ($asociados as $asociado) {
+
+        //     list($Y,$m,$d) = explode("-",$asociado->FechaNacimiento);
+        //     $edad_actual =  date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y;
+
+        //     if($asociado->Edad_Cliente != $edad_actual){
+
+        //     echo "$asociado->FechaNacimiento: $asociado->Edad_Cliente ($edad_actual)";
+        //     echo "<br>";
+        //     }
+        // }
+
+
+    } 
 
     function cargar_interfaz(){
         //Suiche

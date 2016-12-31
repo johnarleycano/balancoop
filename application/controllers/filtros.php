@@ -32,7 +32,8 @@ Class Filtros extends CI_Controller{
 		//se establece el titulo de la pagina
         $this->data['titulo'] = 'Filtros';
         //Se establece la vista que tiene el contenido principal
-        $this->data['contenido_principal'] = 'filtros/index_view';
+        $this->data['contenido_principal'] = 'filtros/index';
+        // $this->data['contenido_principal'] = 'filtros/index_view';
         //Se carga la plantilla con las demas variables
         $this->load->view('plantillas/template', $this->data);
 	}
@@ -47,7 +48,7 @@ Class Filtros extends CI_Controller{
         switch ($tipo) {
             case 'campo':
                 //Se carga la vista
-                $this->load->view('filtros/asociados/campos_view', $this->data);
+                $this->load->view('filtros/asociados/campos', $this->data);
                 break;
                 
             case 'condicional':

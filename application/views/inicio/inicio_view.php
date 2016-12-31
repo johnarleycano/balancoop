@@ -109,7 +109,7 @@ if ($this->session->userdata('id_empresa')) {
 <div id="cont_crear_clave"></div>
 <div class="clear"></div>
 
-<script type="text/javascript">
+<script type="text/javascript">       
     function crear_clave(){
         imprimir("aqui")
         //Cargamos la interfaz

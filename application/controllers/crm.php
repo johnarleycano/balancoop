@@ -44,7 +44,7 @@ Class Crm extends CI_Controller{
             //print_r($guardar);
             //Si se guarda
             if($guardar) {
-                echo "true";
+                echo "true ejecutado";
             } else {
                 echo "false";
             }//If

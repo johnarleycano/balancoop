@@ -281,13 +281,31 @@ function download_send_headers($filename) {
         $condiciones = $this->db->query($sql_condiciones)->result();
         $campos = $this->db->query($sql_campos)->result();
 
-        // Se unen los arrays y se recorren para mandar una cadena de texto
-        foreach (array_merge($condiciones, $campos) as $relacion) {
-            // Agregamos las relaciones una a una, concatenándolas
-            $consulta .= " $relacion->RelacionCampo ";
-        }//Foreach relaciones de condiciones
+        // Arreglo de relaciones
+        $relaciones = array();
 
-        //Se retorna el strging con los nombres de los campos
+        // Se recorren las condiciones
+        foreach ($condiciones as $condicion) {
+            // Se agrega la condición al arreglo a enviar
+            array_push($relaciones, $condicion->RelacionCampo);
+        } // foreach
+
+        // Se recorren los campos
+        foreach ($campos as $campo) {
+            // Se agrega la condición al arreglo a enviar
+            array_push($relaciones, $campo->RelacionCampo);
+        } // foreach
+
+        // Se le quitan los duplicados que pueda tener
+        $arreglo = array_values(array_unique($relaciones));
+
+        // Se recorre
+        for ($i=0; $i < count($arreglo); $i++) { 
+            // Agregamos las relaciones una a una, concatenándolas
+            $consulta .= " {$arreglo[$i]} ";
+        } // for
+
+        // //Se retorna el strging con los nombres de los campos
         return $consulta;
     }
 	

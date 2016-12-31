@@ -15,6 +15,7 @@ $condiciones = $this->crm_model->listar_condiciones($id_filtro);
 // Se listan las relaciones
 $relaciones = $this->crm_model->listar_relaciones($id_filtro);
 // echo "relaciones: ".$relaciones;
+// print_r($relaciones);
 
 // Se reunen y se envía para que arme la consulta
 $datos = $this->crm_model->listar_crm($campos, $relaciones, $condiciones);
@@ -72,9 +73,6 @@ $datos = $this->crm_model->listar_crm($campos, $relaciones, $condiciones);
         // Inicialización de la tabla
         $('#crm').dataTable( {
             "bProcessing": true,
-        }); // Tabla
-        
-        valor = ajax("<?php echo site_url('crm/actualizar') ?>", {"tipo": "condicional"}, 'JSON');
-        //imprimir(valor);        
+        }); // Tabla      
     });//document.rady
 </script>
