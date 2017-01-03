@@ -449,21 +449,48 @@ Class Listas extends CI_Controller{
                 $this->load->view('filtros/asociados/listar', $this->data);
             break;
 
-                //Si es tabla de filtros de productos
-                case 'tabla_filtros_productos':
-                    // Se cargan los filtros de productos (0: no asociados)
-                    $this->data['filtros'] = $this->filtro_model->cargar_filtros_productos();
+            // Daros básicos (para filtros de asociados y productos)
+            case 'filtro_datos_basicos':
+                // Se cargan los filtros
+                $this->data['filtros'] = $this->filtro_model->cargar_filtros_asociados('1');
+                $this->data['id'] = $this->input->post('id');
+                
+                //Cargamos la vista
+                $this->load->view('filtros/datos_basicos', $this->data);
+            break;
 
-                    //Cargamos la vista
-                    $this->load->view('filtros/productos/tabla_view', $this->data);
-                    break;
+                // //Si es tabla de filtros de productos
+                // case 'tabla_filtros_productos':
+                //     // Se cargan los filtros de productos (0: no asociados)
+                //     $this->data['filtros'] = $this->filtro_model->cargar_filtros_productos();
+
+                //     //Cargamos la vista
+                //     $this->load->view('filtros/productos/tabla_view', $this->data);
+                //     break;
 
             //Si es filtro de productos
             case 'filtro_productos':
                 //Cargamos la vista
                 $this->load->view('filtros/productos/index');
-                // $this->load->view('filtros/productos/index_view');
                 break;
+
+            //Si es filtro de productos
+            case 'filtro_productos_crear':
+                // Se recibe por post la variable que define si es un registro nuevo o editado
+                $this->data["id"] = $this->input->post("id");
+            
+                //Cargamos la vista
+                $this->load->view('filtros/productos/crear', $this->data);
+            break;
+
+            //Si es tabla de filstros de productos
+            case 'filtros_productos_lista':
+                // Se cargan los filtros
+                $this->data['filtros'] = $this->filtro_model->cargar_filtros_productos();
+
+                //Cargamos la vista
+                $this->load->view('filtros/productos/listar', $this->data);
+            break;
 
             //Si es actualización de registros
             case 'importacion_actualizacion':

@@ -134,12 +134,9 @@ Class Filtro_model extends CI_Model{
         }
     }
 
-    function guardar_condicional_producto($datos){
-        //Se ejecuta el modelo que guarda los datos
-        $guardar = $this->db->insert('filtros_creados_productos', $datos);
-
+    function guardar_producto($datos){
         //Si el registro es exitoso
-        if($guardar){
+        if($this->db->insert('filtros_creados_productos', $datos)){
             //Retorna verdadero
             return true;
         }else{

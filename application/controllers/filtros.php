@@ -178,9 +178,9 @@ Class Filtros extends CI_Controller{
                     $guardar = $this->filtro_model->guardar_condicional($datos);
                     break;
 
-                case 'condicional_producto':
+                case 'producto':
                     //Se envían los datos al modelo que los guardará
-                    $guardar = $this->filtro_model->guardar_condicional_producto($datos);
+                    $guardar = $this->filtro_model->guardar_producto($datos);
                     break;
 
                 case 'campo':
@@ -245,11 +245,6 @@ Class Filtros extends CI_Controller{
                     //Se envían los datos al modelo que los guardará
                     $guardar = $this->filtro_model->borrar_datos($id);
                     break;
-
-                case 'borrar_datos_filtro_producto':
-                    //Se envían los datos al modelo que los guardará
-                    $guardar = $this->filtro_model->borrar_datos_filtro_producto($id);
-                    break;
             }//switch
 
             //Si se guarda
@@ -267,6 +262,11 @@ Class Filtros extends CI_Controller{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
             redirect('');
         }
+    }
+
+    function borrar_datos_filtro_producto(){
+        //Se envían los datos al modelo que los guardará
+        $guardar = $this->filtro_model->borrar_datos_filtro_producto($this->input->post('id'));
     }
 
 }
