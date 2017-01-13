@@ -12,6 +12,10 @@ Class Listas_model extends CI_Model{
         $this->db->select('*');
         $this->db->order_by('strNombre');
         $this->db->where('Estado', '1');
+
+        if ($this->session->userdata("tipo") != 3 & $tabla == "tipo_usuario") {
+            $this->db->where('Privilegio_Superadministrador', 1);
+        }
         
         //Se ejecuta y retorna la consulta
         return $this->db->get($tabla)->result();

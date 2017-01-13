@@ -44,7 +44,7 @@ $usuarios_sistema = $this->cliente_model->listar_usuarios_sistema_empresa();
 				<td><?php echo $usuario->strNombre; ?></td>
 				<td><?php echo $usuario->Identificacion; ?></td>
 				<td><?php echo $usuario->login; ?></td>
-				<td><?php if($usuario->Estado == "1"){echo "Activo";}else{echo "Inactivo";} ?></td>
+				<td><?php echo $estado = ($usuario->Estado == "1") ? "Activo" : "Inactivo" ; ?></td>
 			</tr>
 			<?php
             //Aumento de contador
