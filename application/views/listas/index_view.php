@@ -12,6 +12,7 @@
             <?php } ?>
             
             <button id="btn_oficinas" type="button" class="btn btn-default">Oficinas</button>
+            <button id="btn_preguntas" type="button" class="btn btn-default">Preguntas</button>
             <button id="btn_proveedores" type="button" class="btn btn-default">Proveedores</button>
             <button id="btn_productos" type="button" class="btn btn-default">Productos</button>
             <button id="btn_regiones" type="button" class="btn btn-default">Regiones</button>
@@ -44,6 +45,15 @@
             //Se muestra la barra de carga
             cargando($("#cont_listas"));
         }); // Campañas
+
+        // Preguntas
+        $("#btn_preguntas").on("click", function(){
+            //Cargamos la interfaz
+            $("#cont_listas").load("listas/cargar_interfaz", {tipo: 'preguntas'});
+
+            //Se muestra la barra de carga
+            cargando($("#cont_listas"));
+        }); // Proveedores
 
         // Proveedores
         $("#btn_proveedores").on("click", function(){

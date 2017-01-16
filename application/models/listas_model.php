@@ -285,6 +285,17 @@ Class Listas_model extends CI_Model{
         return $this->db->query($sql)->result();
     }
 
+    function cargar_pregunta($id){
+        $this->db->where('intCodigo', $id);
+        return $this->db->get('preguntas')->row();
+    }
+
+    function cargar_preguntas(){
+        $this->db->where('id_empresa', $this->session->userdata('id_empresa'));
+        $this->db->order_by('descripcion');
+        return $this->db->get('preguntas')->result();
+    }
+
     function cargar_usuarios_sistema(){
         $sql =
         "SELECT

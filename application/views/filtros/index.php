@@ -212,7 +212,7 @@
 			// "id_Filtro_balance": ,
 			// "id_campo_balance": 
 	    }
-	    imprimir(datos);
+	    // imprimir(datos);
 
 	    // Si trae un id
 	    if(id_filtro){

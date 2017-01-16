@@ -543,6 +543,27 @@ Class Listas extends CI_Controller{
                 $this->load->view('listas/producto_view');
                 break;
 
+            //Si es preguntas
+            case 'preguntas':
+                //Cargamos la vista
+                $this->load->view('listas/preguntas/index');
+                break;
+
+            //Si es creación de pregunta
+            case 'preguntas_crear':
+                // Se recibe por post la variable que define si es un registro nuevo o editado
+                $this->data["id"] = $this->input->post("id");
+            
+                //Cargamos la vista
+                $this->load->view('listas/preguntas/crear', $this->data);
+            break;
+
+            //Si es preguntas
+            case 'preguntas_lista':
+                //Cargamos la vista
+                $this->load->view('listas/preguntas/listar');
+                break;
+
             //Si es proveedor
             case 'proveedor':
                 //Cargamos la vista
