@@ -271,6 +271,11 @@ Class Listas_model extends CI_Model{
         return $this->db->get('productos')->row();
     }
 
+    function cargar_periodicidades(){
+        $this->db->order_by('strNombre');
+        return $this->db->get('periodicidades')->result();
+    }
+
     function cargar_proveedores(){
         $sql =
         "SELECT
@@ -282,6 +287,24 @@ Class Listas_model extends CI_Model{
         ORDER BY strNombre ASC";
         
         //Se ejecuta y retorna la consulta
+        return $this->db->query($sql)->result();
+    }
+
+    function cargar_encuestas(){
+        $sql = 
+        "SELECT
+            encuestas.intCodigo,
+            preguntas.descripcion AS pregunta,
+            productos.strNombre AS producto,
+            periodicidades.strNombre AS periodicidad
+        FROM
+            encuestas
+        LEFT JOIN productos ON encuestas.id_producto = productos.intCodigo
+        LEFT JOIN preguntas ON encuestas.id_pregunta = preguntas.intCodigo
+        LEFT JOIN periodicidades ON encuestas.id_periodicidad = periodicidades.intCodigo
+        WHERE
+            encuestas.id_empresa = {$this->session->userdata('id_empresa')}";
+
         return $this->db->query($sql)->result();
     }
 
@@ -365,6 +388,18 @@ Class Listas_model extends CI_Model{
         //Se retorna el arreglo
         return $dias;
     }//Fin listar_dias
+
+    function listar_horas(){
+        //Se crea un arreglo
+        $horas = array();
+
+        for ($hora = 0; $hora < 24; $hora++) { 
+            array_push($horas, str_pad($hora, 2 , "0", STR_PAD_LEFT));
+        }//Fin for
+
+        //Se retorna el arreglo
+        return $horas;
+    }//Fin listar_horas
 
     /**
      * Lista los meses del año

@@ -11,6 +11,7 @@
                 <button id="btn_listas_desplegables" type="button" class="btn btn-default">Listas desplegables</button>
             <?php } ?>
             
+            <button id="btn_encuestas" type="button" class="btn btn-default">Encuestas</button>
             <button id="btn_oficinas" type="button" class="btn btn-default">Oficinas</button>
             <button id="btn_preguntas" type="button" class="btn btn-default">Preguntas</button>
             <button id="btn_proveedores" type="button" class="btn btn-default">Proveedores</button>
@@ -41,6 +42,15 @@
         $("#btn_campanas").on("click", function(){
             //Cargamos la interfaz
             $("#cont_listas").load("listas/cargar_interfaz", {tipo: 'campana'});
+
+            //Se muestra la barra de carga
+            cargando($("#cont_listas"));
+        }); // Campañas
+
+        // Encuestas
+        $("#btn_encuestas").on("click", function(){
+            //Cargamos la interfaz
+            $("#cont_listas").load("listas/cargar_interfaz", {tipo: 'encuesta'});
 
             //Se muestra la barra de carga
             cargando($("#cont_listas"));

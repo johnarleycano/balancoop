@@ -248,6 +248,30 @@ Class Listas extends CI_Controller{
                 $this->load->view('listas/campana_view');
                 break;
 
+            //Si es encuesta
+            case 'encuesta':
+                //Cargamos la vista
+                $this->load->view('listas/encuestas/index');
+            break;
+
+            //Si es creación de encuesta
+            case 'encuestas_crear':
+                // Se recibe por post la variable que define si es un registro nuevo o editado
+                $this->data["id"] = $this->input->post("id");
+            
+                //Cargamos la vista
+                $this->load->view('listas/encuestas/crear', $this->data);
+            break;
+
+            // Listado de encuestas
+            case 'encuestas_lista':
+                // Se cargan los filtros
+                $this->data['id_producto'] = $this->input->post("id_producto");
+
+                //Cargamos la vista
+                $this->load->view('listas/encuestas/listar', $this->data);
+            break;
+
             // Claves
             case 'claves':
                 //Cargamos la vista

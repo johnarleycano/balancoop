@@ -55,14 +55,12 @@
             return false;
         } // if
 
-
 		// arreglo con los datos
 	    datos = {
 	    	"descripcion": descripcion.val(),
 	    	"id_empresa": "<?php echo $this->session->userdata('id_empresa'); ?>"
 	    }
-	    imprimir(datos);
-
+	    // imprimir(datos);
 
 	    // Si trae un id
 	    if(id_pregunta){
@@ -89,7 +87,7 @@
 	/**
 	 * Listado de los registros
 	 */
-	function listar(tipo)
+	function listar()
 	{
 		//Se muestra la barra de carga
 		cargando($("#cont_tabla"));
