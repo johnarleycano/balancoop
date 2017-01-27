@@ -19,6 +19,9 @@ if ($this->session->userdata('id_empresa')) {
         <!-- Banner -->
         <img src="<?php echo base_url().'img/cabezote_inicio.png' ?>" class="img-responsive" alt="Balancoop"><!-- Banner -->
 
+        <!-- Banner -->
+        <img src="<?php echo base_url().'img/publicidad.png' ?>" class="img-responsive" alt="Balancoop"><!-- Banner -->
+
         <!-- Información de la empresa usuaria -->
         <div class="col-lg-6">
             <!-- Logo -->
@@ -32,15 +35,15 @@ if ($this->session->userdata('id_empresa')) {
                 </center>
             </figure><!-- Logo -->
 
-            <h2>SEGMENTACIÓN</h2>
-            <p>Nuestro sistema, le permite administrar toda la relación comercial, con sus clientes, asociados, prospectos. Oportunidades, Citas, Llamadas, Reuniones, Campañas, Agenda, Productos, Etc.</p>
-            <p><a class="btn btn-default" href="http://balancoop.com/como-funciona.html" target="_blank">Más detalles &raquo;</a></p>
+            <!-- <h2>SEGMENTACIÓN</h2> -->
+            <!-- <p>Nuestro sistema, le permite administrar toda la relación comercial, con sus clientes, asociados, prospectos. Oportunidades, Citas, Llamadas, Reuniones, Campañas, Agenda, Productos, Etc.</p> -->
+            <!-- <p><a class="btn btn-default" href="http://balancoop.com/como-funciona.html" target="_blank">Más detalles &raquo;</a></p> -->
         </div><!-- Información de la empresa usuaria -->
 
         <div class="col-lg-6">
-            <h2>BALANCE SOCIAL</h2>
-            <p>Conforme va registrando sus actuaciones con los asociados, el sistema de CRM, le va alimentando automáticamente el balance social cooperativo por indicadores.</p>
-            <p><a class="btn btn-default" href="http://balancoop.com/compa-ia.html" target="_blank">Más detalles &raquo;</a></p>
+            <!-- <h2>BALANCE SOCIAL</h2> -->
+            <!-- <p>Conforme va registrando sus actuaciones con los asociados, el sistema de CRM, le va alimentando automáticamente el balance social cooperativo por indicadores.</p> -->
+            <!-- <p><a class="btn btn-default" href="http://balancoop.com/compa-ia.html" target="_blank">Más detalles &raquo;</a></p> -->
         </div>
     </div><!-- Contenedor del banner e información de eventos -->
 
@@ -99,6 +102,7 @@ if ($this->session->userdata('id_empresa')) {
         </div><!-- Contenedor de Inicio de sesión -->
     <?php } else { ?>
         <div class="jumbotron">
+            <img src="<?php echo base_url().'img/tulogo.png' ?>" class="img-responsive" alt="Balancoop"><!-- Banner -->
             <h2>Sesión iniciada <small><?php echo $this->session->userdata('nombre_usuario'); ?></small></h2><br>
             <h4><a id="btn_datos" href="#"><span class="glyphicon glyphicon-user"></span> Modificar mis datos</a></h4>
             <h4><a href="<?php echo site_url('inicio/cerrar_sesion'); ?>"><span class="glyphicon glyphicon-remove"></span> Cerrar sesión</a></h4>

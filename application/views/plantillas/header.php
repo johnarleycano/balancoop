@@ -14,8 +14,8 @@
 <link rel="icon" href="<?php echo base_url(); ?>img/favicon.ico" type="image/x-icon">
 
 <!--Archivos de estilo-->
-<link type="text/css" href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">
-<link type="text/css" href="<?php echo base_url(); ?>css/bootstrap-theme.min.css" rel="stylesheet">
+<!-- <link type="text/css" href="<?php // echo base_url(); ?>css/bootstrap-theme.css" rel="stylesheet"> -->
+<link type="text/css" href="<?php echo base_url(); ?>css/bootstrap.css" rel="stylesheet">
 <link type="text/css" href="<?php echo base_url(); ?>css/jquery.dataTables.css" rel="stylesheet">
 <link type="text/css" href="<?php echo base_url(); ?>css/estilos.min.css" rel="stylesheet">
 
