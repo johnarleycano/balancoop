@@ -24,16 +24,7 @@ if ($this->session->userdata('id_empresa')) {
 
         <!-- Información de la empresa usuaria -->
         <div class="col-lg-6">
-            <!-- Logo -->
-            <figure>
-                <center>
-                    <!-- Si existe empresa -->
-                    <?php if (isset($id_empresa)) { $imagen = base_url()."img/logos/".$this->session->userdata('id_empresa').".png"; ?>
-                        <!-- Carga imagen -->
-                        <img id="logo_empresa" src="<?php echo $imagen; ?>" alt="" align="center">    
-                    <?php } ?>
-                </center>
-            </figure><!-- Logo -->
+            
 
             <!-- <h2>SEGMENTACIÓN</h2> -->
             <!-- <p>Nuestro sistema, le permite administrar toda la relación comercial, con sus clientes, asociados, prospectos. Oportunidades, Citas, Llamadas, Reuniones, Campañas, Agenda, Productos, Etc.</p> -->
@@ -102,7 +93,16 @@ if ($this->session->userdata('id_empresa')) {
         </div><!-- Contenedor de Inicio de sesión -->
     <?php } else { ?>
         <div class="jumbotron">
-            <img src="<?php echo base_url().'img/tulogo.png' ?>" class="img-responsive" alt="Balancoop"><!-- Banner -->
+            <!-- Logo -->
+            <figure>
+                <center>
+                    <!-- Si existe empresa -->
+                    <?php if (isset($id_empresa)) { $imagen = base_url()."img/logos/".$this->session->userdata('id_empresa').".png"; ?>
+                        <!-- Carga imagen -->
+                        <img id="logo_empresa" src="<?php echo $imagen; ?>" alt="" align="center">    
+                    <?php } ?>
+                </center>
+            </figure><!-- Logo -->
             <h2>Sesión iniciada <small><?php echo $this->session->userdata('nombre_usuario'); ?></small></h2><br>
             <h4><a id="btn_datos" href="#"><span class="glyphicon glyphicon-user"></span> Modificar mis datos</a></h4>
             <h4><a href="<?php echo site_url('inicio/cerrar_sesion'); ?>"><span class="glyphicon glyphicon-remove"></span> Cerrar sesión</a></h4>
