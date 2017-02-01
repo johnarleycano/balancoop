@@ -139,6 +139,28 @@ Class Inicio extends CI_Controller{
         } //if
     }
 
+    function mrm(){
+        //se establece el titulo de la pagina
+        $this->data['titulo'] = 'MRM';
+        //Se establece la vista que tiene el contenido principal
+        $this->data['contenido_principal'] = 'inicio/mrm_view';
+        //Se carga la plantilla con las demas variables
+        $this->load->view('plantillas/template', $this->data);
+
+        // $this->calcular_edades();
+    }
+
+    function proyectos(){
+        //se establece el titulo de la pagina
+        $this->data['titulo'] = 'Proyectos';
+        //Se establece la vista que tiene el contenido principal
+        $this->data['contenido_principal'] = 'inicio/proyecto_view';
+        //Se carga la plantilla con las demas variables
+        $this->load->view('plantillas/template', $this->data);
+
+        // $this->calcular_edades();
+    }
+
     function validar_sesion(){
         //Se valida que la peticion venga mediante ajax y no mediante el navegador
         if($this->input->is_ajax_request()){
