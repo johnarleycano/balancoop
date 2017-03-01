@@ -37,21 +37,25 @@
                     <!-- Opciones -->
                     <ul class="dropdown-menu">
                         <!-- Actualización -->
-                        <li><a href="<?php echo site_url('cliente/actualizados'); ?>">Actualización</a></li>
-                        <li class="divider"></li>
+                        <!-- <li><a href="<?php // echo site_url('cliente/actualizados'); ?>">Actualización</a></li> -->
+                        <!-- <li class="divider"></li> -->
                         
                         <!-- Importar -->
-                        <li><a href="<?php echo site_url('importacion'); ?>">Importar</a></li>
+                        <!-- <li><a href="<?php // echo site_url('importacion'); ?>">Importar</a></li> -->
 
                         <!-- Filtros -->
                         <li><a href="<?php echo site_url('filtros'); ?>">Filtros</a></li>
                         
                         <!-- Listas -->
                         <li><a href="<?php echo site_url('listas'); ?>">Listas</a></li>
-                        <li class="divider"></li>
                         
+                        <!-- Listas -->
+                        <li class="divider"></li>
+                        <li><a href="<?php echo site_url('inicio/mrm'); ?>">MRM</a></li>
+                        <li><a href="<?php echo site_url('inicio/proyectos'); ?>">Proyectos</a></li>
+
                         <!-- Reporte de campañas -->
-                        <li><a href="<?php echo site_url('reporte/campana'); ?>">Reporte de campañas</a></li>
+                        <!--<li><a href="<?php // echo site_url('reporte/campana'); ?>">Reporte de campañas</a></li>-->
                     </ul><!-- Opciones -->
                 </li><!-- Administración -->
             <?php } ?>

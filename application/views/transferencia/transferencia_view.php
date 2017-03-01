@@ -1,4 +1,4 @@
-<?php
+	<?php
 // se verifica si los datos vienen por get
 if ($this->uri->segment(6) == "get") {
 	//Cuando la transferencia se genera desde afuera, los datos se toman por get
@@ -22,9 +22,9 @@ if($this->input->post('metodo') == 'post') {
 }
 
 // Se declaran las variables en cero
-$compras_anio_seleccionado = "0";
-$compras_anio_actual = "0";
-$compras_ultimos_meses = "0";
+$compras_anio_seleccionado = 0;
+$compras_anio_actual = 0;
+$compras_ultimos_meses = 0;
 
 //Datos
 $datos_asociado = $this->transferencia_model->buscar_asociado($identificacion, $id_empresa);
@@ -66,6 +66,94 @@ $transferencias = $this->transferencia_model->transferencias_mensuales($id_empre
 	<?php } ?>
 	<p>Utiliza nuestros servicios y recibe una mayor transferencia solidaria. Somos una Cooperativa con alto beneficio social.<br> Accede a los siguientes enlaces y conoce todo lo que podemos hacer por tí.</p>
 </div><!-- Nombre del asociado -->
+
+<!-- Resumen general -->
+<div class="row">
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<th class="text-center">Categorías</th>
+				<th class="text-center">Líneas</th>
+				<th class="text-center">Asociados</th>
+				<th class="text-center">Total Transferencia solidaria como cooperativa a sus asociados</th>
+				<th class="text-center">Promedio de transferencia solidaria como cooperativa a sus asociados</th>
+				<th class="text-center">Su transferencia</th>
+				<th class="text-center">Su transferencia solidaria comparada con el promedio de la cooperativa</th>
+			</thead>
+
+			<tbody>
+				<?php
+				$transferencia_acumulada = 0	;
+				$promedio_acumulado = 0	;
+				$total_promedio_transferencia_asociado = 0	;
+				$acumulado_transferencia_asociado = 0	;
+				$acumulado_comparacion = 0	;
+				
+				// Se recorren las categorías
+				foreach ($this->listas_model->cargar_productos_categorias($id_empresa) as $categoria) {
+					// Cantidad de asociados
+					$asociados = $this->transferencia_model->asociados_por_categoria($id_empresa, $id_oficina, $anio, $categoria->intCodigo);
+
+
+
+					// Transferencia total
+					$transferencia_total = $this->transferencia_model->transferencia_por_categoria($id_empresa, $id_oficina, $anio, $categoria->intCodigo);
+					$transferencia_acumulada += $transferencia_total;
+
+					// Promedio de transferencia
+					if ($asociados > 0) {
+						$promedio_transferencia = $transferencia_total / $asociados;
+					} else {
+						$promedio_transferencia = 0;
+					}
+
+					$promedio_acumulado += $promedio_transferencia;
+
+					// Transferencia asociado
+					$transferencia_asociado = $this->transferencia_model->transferencia_por_asociado($id_empresa, $id_oficina, $anio, $categoria->intCodigo, $identificacion);
+					$acumulado_transferencia_asociado += $transferencia_asociado;
+
+					// Diferencia en transferencia
+					$comparacion_transferencia = $transferencia_asociado - $promedio_transferencia;
+					$acumulado_comparacion = $acumulado_comparacion + $comparacion_transferencia;
+					
+					// Color de la comparación
+					$color_comparacion = ($comparacion_transferencia < 0) ? "text-danger" : "" ;
+
+				?>
+					<tr>
+						<td width="25%"><?php echo $categoria->strNombre; ?></td>
+						<td width="25%"></td>
+						<td width="10%" class="text-right"><?php echo number_format($asociados, 0, '', '.'); ?></td>
+						<td width="10%" class="text-right"><?php echo "$ ".number_format($transferencia_total, 0, '', '.'); ?></td>
+						<td width="10%" class="text-right"><?php echo "$ ".number_format($promedio_transferencia, 0, '', '.'); ?></td>
+						<td width="10%" class="text-right"><?php echo "$ ".number_format($transferencia_asociado, 0, '', '.'); ?></td>
+						<td width="10%" class="text-right <?php echo $color_comparacion; ?>"><?php echo "$".number_format($comparacion_transferencia, 0, '', '.'); ?></td>
+					</tr>
+				<?php
+				} // foreach
+
+				$color_acumulado_comparacion = ($acumulado_comparacion < 0) ? "text-danger" : "" ;
+				?>
+					
+				<tr>
+					<td></td>
+					<td></td>
+					<td class="text-right"><b>Totales</b></td>
+					<td class="text-right"><b><?php echo "$ ".number_format($transferencia_acumulada, 0, "", "."); ?></b></td>
+					<td class="text-right"><b><?php echo "$ ".number_format($promedio_acumulado, 0, "", "."); ?></b></td>
+					<td class="text-right"><b><?php echo "$ ".number_format($acumulado_transferencia_asociado, 0, "", "."); ?></b></td>
+					<td class="text-right <?php echo $color_comparacion; ?>"><b><?php echo "$ ".number_format($acumulado_comparacion, 0, "", "."); ?></b></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div><!-- Resumen general -->
+
+<p class="well">
+	El resultado de la comparación de su transferencia solidaria en promedio que entregó nuestra entidad por asociado, debe dar un valor negativo o un valor positivo. Si su transferencia es positiva, eso indica que usted está utilizando nuestros servicios adecuadamente y como resultado nuestra entidad le está realizando mayor transferencia solidaria. Esto como resultado monetario en diferencia de tasas de mercado de productos de captación o colocación o la participación activa de las actividades sociales que realiza nuestra entidad. Si el resultado es negativo, es consecuencia de su baja utilización de nuestros servicios o de asistencia a nuestras actividades sociales.
+</p>
 
 <!-- Compras del año seleccionado -->
 <ul class="nav nav-pills nav-stacked col-sm-3">
@@ -111,10 +199,13 @@ $transferencias = $this->transferencia_model->transferencias_mensuales($id_empre
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th align="center">Descripción</th>
-				<th align="center">Punto de venta</th>
+				<th align="center">Oficina</th>
 				<th align="center">Mes</th>
-				<th align="center">Compras</th>
+				<th align="center">Producto</th>
+				<th align="center">Línea</th>
+				<th align="center">Categoría</th>
+				<th align="center">Cantidad</th>
+				<th align="center">Movimiento</th>
 				<th align="center">Transferencias</th>
 			</tr>
 		</thead>
@@ -125,9 +216,12 @@ $transferencias = $this->transferencia_model->transferencias_mensuales($id_empre
 			foreach ($transferencias as $transferencia) {
 			?>
 				<tr>
-					<td>Transferencia (descuentos o auxilios educativos)</td>
 					<td><?php echo $this->listas_model->obtener_nombre_oficina($transferencia->id_agencia); ?></td>
 					<td><?php echo $transferencia->Mes; ?></td>
+					<td><?php echo $transferencia->Producto; ?></td>
+					<td><?php echo $transferencia->Linea; ?></td>
+					<td><?php echo $transferencia->Categoria; ?></td>
+					<td class="text-right"><?php echo $transferencia->Cantidad; ?></td>
 					<td align="right"><?php echo "$".number_format($transferencia->Compras, 0, '', '.'); ?></td>
 					<td align="right"><?php echo "$".number_format($transferencia->Transferencias, 0, '', '.') ; ?></td>
 				</tr>
@@ -138,6 +232,9 @@ $transferencias = $this->transferencia_model->transferencias_mensuales($id_empre
 			?>
 			
 			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
 				<td></td>
 				<td></td>
 				<td align="right"><b>Total año <?php echo $anio; ?></b></td>

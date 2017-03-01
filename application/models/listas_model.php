@@ -243,23 +243,28 @@ Class Listas_model extends CI_Model{
     function cargar_productos(){
         $sql =
         "SELECT
-        productos.intCodigo,
-        productos.strNombre,
-        productos.valor,
-        productos.id_proveedor,
-        productos.Tipo,
-        productos.id_linea,
-        productos.id_categoria,
-        productos.Estado,
-        productos.id_empresa,
-        proveedores.strNombre AS Proveedor,
-        productos.transferencia AS Transferencia
+            pr.intCodigo,
+            pr.strNombre,
+            pr.valor,
+            pr.id_proveedor,
+            pr.Tipo,
+            pr.id_linea,
+            pr.id_categoria,
+            pr.Estado,
+            pr.id_empresa,
+            p.strNombre AS Proveedor,
+            pr.transferencia AS Transferencia,
+            c.strNombre AS Categoria,
+            l.strNombre AS Linea
         FROM
-        productos
-        LEFT JOIN proveedores ON productos.id_proveedor = proveedores.intCodigo
+            productos AS pr
+        LEFT JOIN proveedores AS p ON pr.id_proveedor = p.intCodigo
+        LEFT JOIN productos_categorias AS c ON pr.id_categoria = c.intCodigo
+        LEFT JOIN productos_lineas AS l ON pr.id_linea = l.intCodigo
         WHERE
-        productos.id_empresa = {$this->session->userdata('id_empresa')}
-        ORDER BY strNombre";
+            pr.id_empresa = {$this->session->userdata('id_empresa')}
+        ORDER BY
+            strNombre ASC";
 
         // Se retorna el resultado de la consulta
         return $this->db->query($sql)->result();
@@ -269,6 +274,24 @@ Class Listas_model extends CI_Model{
         $this->db->select('*');
         $this->db->where('intCodigo', $id_producto);
         return $this->db->get('productos')->row();
+    }
+
+    function cargar_productos_categorias($id_empresa){
+        $sql =
+        "SELECT
+            c.intCodigo,
+            c.strNombre
+        FROM
+            productos_categorias AS c
+        INNER JOIN productos AS p ON p.id_categoria = c.intCodigo
+        WHERE
+            p.id_empresa = $id_empresa
+        GROUP BY
+            p.id_categoria
+        ORDER BY
+            c.strNombre ASC";
+
+        return $this->db->query($sql)->result();
     }
 
     function cargar_periodicidades(){
@@ -290,10 +313,32 @@ Class Listas_model extends CI_Model{
         return $this->db->query($sql)->result();
     }
 
+    function cargar_destinatarios($id_producto)
+    {
+        $sql =
+        "SELECT
+            cp.CorreoElectronico,
+            cp.Nombre,
+            cp.PrimerApellido,
+            cp.SegundoApellido
+        FROM
+            clientes_productos AS cp
+        WHERE
+            cp.id_empresa = {$this->session->userdata('id_empresa')}
+        AND cp.fecha_final >= '".date('Y-m-d')."'
+        AND cp.CorreoElectronico <> ''
+        AND cp.id_producto = {$id_producto}
+        GROUP BY
+            cp.CorreoElectronico";
+
+        return $this->db->query($sql)->result();
+    } // cargar_destinatarios
+
     function cargar_encuestas(){
         $sql = 
         "SELECT
             encuestas.intCodigo,
+            encuestas.Estado,
             preguntas.descripcion AS pregunta,
             productos.strNombre AS producto,
             periodicidades.strNombre AS periodicidad
@@ -306,6 +351,11 @@ Class Listas_model extends CI_Model{
             encuestas.id_empresa = {$this->session->userdata('id_empresa')}";
 
         return $this->db->query($sql)->result();
+    }
+
+    function cargar_encuesta($id){
+        $this->db->where('intCodigo', $id);
+        return $this->db->get('encuestas')->row();
     }
 
     function cargar_pregunta($id){

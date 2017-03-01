@@ -58,7 +58,7 @@
             <hr>
 
             <footer>
-                <p>&copy; Company 2013</p>
+                <p>&copy; Balancoop | 2017</p>
             </footer>
         </div> <!-- /container -->
     </body>

@@ -7,6 +7,55 @@
 * @author 		       Oscar Humberto Morales
 */
 Class Transferencia_model extends CI_Model{
+	function asociados_por_categoria($id_empresa, $id_oficina, $anio, $id_categoria){
+		$sql = 
+        "SELECT DISTINCT
+			cp.id_cliente
+		FROM
+			clientes_productos AS cp
+		LEFT JOIN productos AS p ON cp.id_producto = p.intCodigo
+		WHERE
+			cp.id_empresa = $id_empresa
+		-- AND cp.id_agencia = $id_oficina
+		AND cp.ano = $anio
+		AND p.id_categoria = $id_categoria";
+
+        return count($this->db->query($sql)->result());
+	}
+
+	function transferencia_por_categoria($id_empresa, $id_oficina, $anio, $id_categoria){
+		$sql = 
+        "SELECT
+			sum(cp.transferencia) Total
+		FROM
+			clientes_productos AS cp
+		LEFT JOIN productos AS p ON cp.id_producto = p.intCodigo
+		WHERE
+			cp.id_empresa = $id_empresa
+		-- AND cp.id_agencia = $id_oficina
+		AND cp.ano = $anio
+		AND p.id_categoria = $id_categoria";
+
+        return $this->db->query($sql)->row()->Total;
+	}
+
+	function transferencia_por_asociado($id_empresa, $id_oficina, $anio, $id_categoria, $identificacion){
+		$sql = 
+        "SELECT
+			sum(cp.transferencia) Total
+		FROM
+			clientes_productos AS cp
+		LEFT JOIN productos AS p ON cp.id_producto = p.intCodigo
+		WHERE
+			cp.id_empresa = $id_empresa
+		-- AND cp.id_agencia = $id_oficina
+		AND cp.ano = $anio
+		AND p.id_categoria = $id_categoria
+		AND cp.id_cliente = $identificacion";
+
+        return $this->db->query($sql)->row()->Total;
+	}
+
 	function buscar_asociado($documento, $id_empresa){
         $sql = 
         "SELECT
@@ -126,10 +175,11 @@ Class Transferencia_model extends CI_Model{
 
 		//Si 
 		if ($datos['id_oficina'] != "0") {
-			$oficina = " clientes_productos.id_agencia = {$datos['id_oficina']} AND ";
+			// $oficina = " clientes_productos.id_agencia = {$datos['id_oficina']} AND ";
+			$oficina = " cp.id_agencia = {$datos['id_oficina']} AND ";
 		}
 
-		$sql =
+		$sql_ =
 		"SELECT
 		clientes_productos.mes AS Mes,
 		clientes_productos.id_agencia,
@@ -147,6 +197,35 @@ Class Transferencia_model extends CI_Model{
 		clientes_productos.mes
 		ORDER BY
 		clientes_productos.mes ASC";
+
+		$sql = 
+		"SELECT
+			cp.id_agencia,
+			cp.mes Mes,
+			productos.intCodigo AS id_producto,
+			productos.strNombre AS Producto,
+			pc.strNombre AS Categoria,
+			pl.strNombre AS Linea,
+			IFNULL(sum(cp.valor),0) AS Compras,
+			IFNULL(sum(cp.transferencia),0) AS Transferencias,
+			COUNT(cp.id_producto) Cantidad,
+			IFNULL(sum(cp.Valor),0) AS Valor
+		FROM
+			clientes_productos AS cp
+		LEFT JOIN productos ON cp.id_producto = productos.intCodigo
+		LEFT JOIN productos_lineas AS pl ON productos.id_linea = pl.intCodigo
+		LEFT JOIN productos_categorias AS pc ON pc.intCodigo = productos.id_categoria
+		WHERE
+			{$oficina}
+			cp.ano = {$datos['anio']} AND
+			cp.id_cliente = {$datos['identificacion']} AND
+			cp.id_empresa = {$id_empresa}
+		GROUP BY
+			cp.id_producto,
+			cp.id_agencia,
+			cp.mes
+		ORDER BY
+			cp.mes DESC";
 
 		$resultado = $this->db->query($sql)->result();
 
